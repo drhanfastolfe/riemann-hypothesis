@@ -142,19 +142,6 @@ theorem ZO.one_of_deriv (hf : AnalyticAt ℂ f x) (h0 : f x = 0) (hd : deriv f x
   rw [smul_eq_mul, h0, sub_zero] at h
   rw [pow_one, h]
 
-theorem meromorphicAt_prod {ι : Type*} (t : Finset ι) (F : ι → ℂ → ℂ) (h : ∀ i ∈ t, MeromorphicAt (F i) x) :
-    MeromorphicAt (fun s => ∏ i ∈ t, F i s) x := by
-  classical
-  revert h
-  refine Finset.induction_on t ?_ ?_
-  · intro _
-    simp only [Finset.prod_empty]
-    exact MeromorphicAt.const 1 x
-  · intro a t ha ih h
-    simp only [Finset.prod_insert ha]
-    exact (h a (Finset.mem_insert_self a t)).fun_mul
-      (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
-
 /-- An Euler factor with a coefficient in the closed unit disk is nonzero for `0 < s.re`. -/
 theorem factor_ne_zero (N : ℕ) (hN : 2 ≤ N) (c s : ℂ) (hc : ‖c‖ ≤ 1) (hs : 0 < s.re) :
     1 - c * (N : ℂ) ^ (-s) ≠ 0 := by

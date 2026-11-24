@@ -560,7 +560,7 @@ theorem lOrd_even (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (S : Finset (HeightO
     ∏ v ∈ S, (1 - (Ideal.absNorm v.asIdeal : ℂ) ^ (-s))⁻¹, ?_, ?_, ?_⟩
   · intro x _
     exact ((meromorphicOn_continuedDedekindZeta F x trivial).inv).mul
-      (meromorphicAt_prod S _ fun v _ => (hfac v x).meromorphicAt.inv)
+      (MeromorphicAt.fun_prod (s := S) fun v _ => (hfac v x).meromorphicAt.inv)
   · intro s hs
     have hs0 : 0 < s.re := by linarith
     have key := hasProd_compl_finset (fun v => 1 - eSp E v ^ j * (Ideal.absNorm v.asIdeal : ℂ) ^ (-s))
@@ -638,10 +638,10 @@ theorem lOrd_odd (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (S : Finset (HeightOn
   · intro x _
     refine ((((meromorphicOn_continuedDedekindZeta E x trivial).inv).mul
       (meromorphicOn_continuedDedekindZeta F x trivial)).mul ?_).mul ?_
-    · exact meromorphicAt_prod T _ fun v _ =>
-        ((meromorphicAt_prod (fib F E v) _ fun P _ => (hfacE P x).meromorphicAt).mul
+    · exact MeromorphicAt.fun_prod (s := T) fun v _ =>
+        ((MeromorphicAt.fun_prod (s := fib F E v) fun P _ => (hfacE P x).meromorphicAt).mul
           (hfacF v x).meromorphicAt.inv).inv
-    · exact meromorphicAt_prod (T \ S) _ fun v _ => (hfac v x).meromorphicAt
+    · exact MeromorphicAt.fun_prod (s := T \ S) fun v _ => (hfac v x).meromorphicAt
   · intro s hs
     have hs0 : 0 < s.re := by linarith
     have hFinv : HasProd (fun v : HeightOneSpectrum (𝓞 F) => (1 - (Ideal.absNorm v.asIdeal : ℂ) ^ (-s))⁻¹)
